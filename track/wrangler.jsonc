@@ -1,0 +1,9 @@
+{
+  "name": "track",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-04",
+  "vars": {
+    "DATABSE_URL":"prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqd3RfaWQiOjEsInNlY3VyZV9rZXkiOiJza196LTF4clNxd1lvOWRtV1lMem5hWXMiLCJhcGlfa2V5IjoiMDFLTkJBQlY0MjlNM01LWFlLNDNLU0U1M0IiLCJ0ZW5hbnRfaWQiOiI1MDI3NWM1ODNkYjc4M2VmYzRhYjc4NGM4NzliMmY3MGYxMGU5MjAzOThmMmFhY2EzMmQ1MzMwMWM0NTJiNTQ0IiwiaW50ZXJuYWxfc2VjcmV0IjoiNzIwNzA5NjItZWVhZC00ZjM0LWFkMjItNjlmZWQ4ODY0OTFkIn0.3uPb7zNI7ORFu5HjLbyKXv3yt6f16qMjR7dJX3FWeOE",
+    "JWT_SECRET":"financeset"
+  }
+}
