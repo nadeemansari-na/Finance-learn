@@ -5,6 +5,7 @@ import { Signin } from "./pages/Signin"
 import { Transaction } from "./pages/Transaction"
 import { SidebarProvider } from "./context/sidebarContext"
 import { BottomListProvider } from "./context/createcontext"
+import { ToggleProvider } from "./context/toggle"
 
 
 
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <div>
+      <ToggleProvider>
       <SidebarProvider>
         <BottomListProvider>
         <BrowserRouter>
@@ -24,6 +26,7 @@ function App() {
         </BrowserRouter>
           </BottomListProvider>
       </SidebarProvider>
+      </ToggleProvider>
     </div>
   )
 }

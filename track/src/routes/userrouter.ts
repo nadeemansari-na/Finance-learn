@@ -2,13 +2,13 @@ import { Hono } from "hono";
 import { createPrisma } from "../pr";
 import { Categorycheck, categorycheck, check } from "@codingwith/common-app";
 import { sign,verify,decode } from "hono/jwt";
-
+import {z} from "zod"
 export const userrouter = new Hono<{   Bindings: {
   DATABASE_URL: string
   JWT_SECRET: string
   } }>()
 
-
+ 
 
 userrouter.post('/signup', async (c) => {
   // const users=await prisma.user.findMany()
@@ -19,6 +19,7 @@ userrouter.post('/signup', async (c) => {
   
   const body=await c.req.json();
   const {success}=check.safeParse(body)
+  console.log("body :",body)
   if(!success){
     return c.text('invalid input')
   }
@@ -47,7 +48,16 @@ const categories = [
     })),
   ]
 
-    const  {success,data}=await categorycheck.safeParse(categories)
+    //zod schema 
+     const categoriescheck = z.array(
+  z.object({
+    name: z.string(),
+    type: z.enum(["income", "expense"]),
+  })
+);
+
+
+    const  {success,data}= categoriescheck.safeParse(categories)
  
     if(!success){
       c.status(400);
@@ -55,11 +65,11 @@ const categories = [
     }
     
     await prisma.category.createMany({
-      data : {
-        name:data.name,
-        type:data.type,
-        userId:user.id
-      }
+     data: data.map((e) => ({
+    name: e.name,
+    type: e.type,
+    userId: user.id,
+  })),
     })
      
      return c.json({

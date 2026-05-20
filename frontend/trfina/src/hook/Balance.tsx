@@ -11,7 +11,7 @@ interface inexbaltype{
 
 export const useBalanceInEx=()=>{
     const [loading,setloading]=useState(true)
-    const [data, setdata]=useState<inexbaltype >({
+    const [ddata, setdata]=useState<inexbaltype >({
         income:0,
         expense:0,
         balance:0
@@ -38,7 +38,7 @@ export const useBalanceInEx=()=>{
     },[])
 
     return {
-        data,
+        ddata,
         loading
     }
 }

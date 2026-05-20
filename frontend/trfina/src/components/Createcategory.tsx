@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCategoryList } from "../hook/Categorylist";
-import { ContextCategoryId } from "../context/categoryId";
+import {useCategory } from "../context/categoryId";
 
 
-export const CreateCategory = ({ typee }) => {
+export const CreateCategory = ({ typee}) => {
   const {categorylist,setCategoryList}=useCategoryList()
   const [expensecategory, setExpenseCategory] = useState(["Food", "Travel", "Shopping"]);
   const [incomecategory, setIncomeCategory] = useState(["Salary", "Investment", "Refund"]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-  const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  console.log(selectedCategoryId)
+  const {categoryId,setCategoryId}=useCategory()
+  console.log("selected category id :",categoryId)
   // const selectedname=categorylist.find(c=>
   //     c.id==selectedCategory
   //   )
+
+  console.log("catid :",categoryId)
   useEffect(()=>{
       if(categorylist.length>0){
-        setSelectedCategoryId(categorylist[0].id)
+       
+        setCategoryId(categorylist?.[0]?.id || "")
       }
   },[categorylist])
 
@@ -43,7 +46,7 @@ export const CreateCategory = ({ typee }) => {
       })
       console.log("new category id :",typeof(res.data.id))
       setCategoryList(prev => [...prev , res.data] )
-      setSelectedCategoryId(String(res.data.id))
+      setCategoryId(String(res.data.id))
       setNewCategory("")
     } catch (e) {
       console.error(e)
@@ -52,79 +55,255 @@ export const CreateCategory = ({ typee }) => {
 
 
   return (
-    <ContextCategoryId.Provider value={selectedCategoryId}  >
 
    
-    <div>
-      
-      <select className="w-full p-1 pl-3  border rounded-lg "
-        value={selectedCategoryId}
-        onChange={(e) => {
-          if (e.target.value == "add_New") {
-            setShowCategoryModal(true)
-          }
-          else {
-            setSelectedCategoryId(e.target.value)
-          }
-        }}
+   <div className="w-full">
+
+  {/* Select */}
+  <div className="relative">
+
+    <select
+      className="
+        w-full
+
+        px-4 py-3
+
+        rounded-2xl
+
+        bg-gray-50 dark:bg-gray-800
+
+        border border-gray-200 dark:border-gray-700
+
+        text-gray-700 dark:text-white
+
+        outline-none
+
+        focus:ring-2 focus:ring-blue-500/30
+        focus:border-blue-500
+
+        transition-all duration-200
+
+        appearance-none
+
+        cursor-pointer
+      "
+      value={categoryId}
+      onChange={(e) => {
+        console.log("target :",e.target.value)
+        setCategoryId(e.target.value);
+        if (e.target.value === "add_New") {
+        
+          setShowCategoryModal(true);
+        }
+      }}
+    >
+
+      {categorylist
+        .filter((e) => e.type === typee)
+        .map((e) => (
+          <option key={e.id} value={String(e.id)}>
+            {e.name}
+          </option>
+        ))}
+    
+      <option value="add_New">
+        + Add Category
+      </option>
+
+    </select>
+
+    {/* Arrow */}
+    <div
+      className="
+        pointer-events-none
+
+        absolute right-4 top-1/2
+        -translate-y-1/2
+
+        text-gray-400 dark:text-gray-500
+      "
+    >
+      ▼
+    </div>
+
+  </div>
+
+  {/* Modal */}
+  {showCategoryModal && (
+
+    <div
+      className="
+        fixed inset-0 z-50
+
+        flex items-center justify-center
+
+        bg-black/40
+        backdrop-blur-[2px]
+
+        p-4
+      "
+    >
+
+      {/* Modal Card */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="
+          w-full max-w-md
+
+          rounded-3xl
+
+          bg-white dark:bg-gray-900
+
+          border border-gray-200 dark:border-gray-800
+
+          shadow-2xl shadow-black/20
+
+          p-6
+
+          animate-in fade-in zoom-in-95 duration-200
+        "
       >
 
-        {categorylist.filter((e)=> e.type==typee)
-          .map((e)=>(
-              <option key={e.id} value={String(e.id)}>{e.name}</option>
-          ))
-        }
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
 
-        {/* {typee == "income" ? incomecategory.map((e) => (
-          <option key={e} value={e}>{e}</option>
-        )) : expensecategory.map((c) => (
-          <option key={c} value={c}>{c}</option>
-        ))} */}
-        <option value="add_New">+ add category</option>
-      </select>
+          <div>
 
+            <h2
+              className="
+                text-xl font-bold
 
-      {showCategoryModal && (
-        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-          <div className="bg-white w-[90%] max-w-md rounded-2xl p-5 shadow-lg">
+                text-gray-800 dark:text-white
+              "
+            >
+              Add Category
+            </h2>
 
-            {/* Header */}
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">Add Category</h2>
-              <button onClick={() => setShowCategoryModal(false)}>✕</button>
-            </div>
+            <p
+              className="
+                text-sm mt-1
+                text-gray-500 dark:text-gray-400
+              "
+            >
+              Create a new transaction category
+            </p>
 
-            {/* Input */}
-            <input
-              type="text"
-              placeholder="Category name"
-              value={newCategory}
-              onChange={(e) => setNewCategory(e.target.value)}
-              className="w-full border p-2 rounded-lg mb-4"
-            />
-
-            {/* Actions */}
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setShowCategoryModal(false)}
-                className="px-3 py-1 rounded-lg bg-gray-200"
-              >
-                Cancel
-              </button>
-
-              <button
-                onClick={handleAddCategory}
-                className="px-3 py-1 rounded-lg bg-blue-500 text-white"
-              >
-                Save
-              </button>
-            </div>
           </div>
-        </div>
-      )}
 
+          {/* Close */}
+          <button
+            onClick={() => setShowCategoryModal(false)}
+            className="
+              w-9 h-9
+
+              flex items-center justify-center
+
+              rounded-full
+
+              bg-gray-100 dark:bg-gray-800
+
+              hover:bg-red-100
+              dark:hover:bg-red-900/20
+
+              text-gray-500 dark:text-gray-400
+              hover:text-red-500
+
+              transition-all duration-200
+            "
+          >
+            ✕
+          </button>
+
+        </div>
+
+        {/* Input */}
+        <input
+          type="text"
+          placeholder="Category name"
+          value={newCategory}
+          onChange={(e) => setNewCategory(e.target.value)}
+          className="
+            w-full
+
+            px-4 py-3
+
+            rounded-2xl
+
+            bg-gray-50 dark:bg-gray-800
+
+            border border-gray-200 dark:border-gray-700
+
+            text-gray-700 dark:text-white
+
+            placeholder:text-gray-400
+
+            outline-none
+
+            focus:ring-2 focus:ring-blue-500/30
+            focus:border-blue-500
+
+            transition-all duration-200
+          "
+        />
+
+        {/* Footer */}
+        <div className="flex justify-end gap-3 mt-6">
+
+          {/* Cancel */}
+          <button
+            onClick={() => setShowCategoryModal(false)}
+            className="
+              px-4 py-2
+
+              rounded-xl
+
+              bg-gray-100 dark:bg-gray-800
+
+              text-gray-700 dark:text-gray-300
+
+              hover:bg-gray-200
+              dark:hover:bg-gray-700
+
+              transition-all duration-200
+            "
+          >
+            Cancel
+          </button>
+
+          {/* Save */}
+          <button
+            onClick={handleAddCategory}
+            className="
+              px-5 py-2
+
+              rounded-xl
+
+              bg-linear-to-r
+              from-blue-500
+              to-cyan-500
+
+              text-white font-medium
+
+              shadow-lg shadow-blue-500/20
+
+              hover:scale-[1.03]
+
+              active:scale-[0.97]
+
+              transition-all duration-200
+            "
+          >
+            Save
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
-     </ContextCategoryId.Provider>
+
+  )}
+
+</div>
   )
 }

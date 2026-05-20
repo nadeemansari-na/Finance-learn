@@ -5,6 +5,8 @@ import { PieChart, Pie, ResponsiveContainer, Legend, Tooltip, Cell, type Tooltip
 import type { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import { useexpense } from "../hook/Expense";
 import { useEffect, useState } from "react";
+import { useOpen } from "../context/createcontext";
+import { useNavigate } from "react-router-dom";
 interface MyTooltipProps extends TooltipProps<ValueType, NameType> {
   payload?: any[];
 }
@@ -33,7 +35,8 @@ const COLORS = [
 export const PieChartcomponent = () => {
   const { data } = useexpense()
   const [info, setinfo] = useState<info[]>([])
-
+  const {Open}=useOpen()
+  const navigate=useNavigate()
 
 
 
@@ -65,63 +68,286 @@ export const PieChartcomponent = () => {
   color: "#3b82f6",  // 👈 color of slice
   payload: {...}     // 👈 original data
 } */
-  const rendercustomlegend = (props: any) => {
-    const { payload } = props
-    return (
-      <ul className="p-0 m-0 list-none">
-        {payload.map((entry: any, index: number) => (
-          <li key={`item-${index}`} className="flex gap-6 justify-center items-center mr-5 xl:mr-12" style={{ color: entry.color }}>
-              <span
-              style={{
-                display: "inline-block",
-                width: "10px",
-                height: "10px",
-                backgroundColor: entry.color,
-                borderRadius: "50%",
-                marginRight: "2px"
-              }}
-            ></span>  
-            <span className=" inline-block  min-w-7">
-            {info[index].name}
-              </span> 
-              <span className="inline-block  min-w-10">
-                 ₹{info[index].value}
-              </span>
-              <span className="inline-block  min-w-7">
-               {info[index].percentage}
+ const rendercustomlegend = (props: any) => {
+  const { payload } = props;
 
-              </span>
-          </li>
-        ))}
-      </ul>
-    )
-  }
+  return (
+    <ul className="flex flex-wrap justify-center lg:flex-col gap-3 mt-4 lg:mt-0">
+      {payload.map((entry: any, index: number) => (
+        <li
+          key={`item-${index}`}
+          className="
+            flex items-center gap-2
+            bg-gray-100 dark:bg-gray-700
+            px-3 py-2 rounded-xl
+            text-xs sm:text-sm
+            min-w-35
+          "
+        >
+          {/* Color Dot */}
+          <span
+            className="w-3 h-3 rounded-full"
+            style={{ backgroundColor: entry.color }}
+          />
+
+          {/* Category */}
+          <span className="font-medium truncate">
+            {info[index].name}
+          </span>
+
+          {/* Amount */}
+          <span className="ml-auto text-gray-500 dark:text-gray-300">
+            ₹{info[index].value}
+          </span>
+
+          {/* Percentage */}
+          <span className="text-blue-500 font-semibold">
+            {info[index].percentage}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 
 
 
   return (
-      <ResponsiveContainer width="100%" height="100%"  >
+    <div
+  className="
+    w-full h-105 sm:h-125
+
+    bg-white dark:bg-gray-900
+
+    rounded-2xl
+
+    border border-gray-200 dark:border-gray-800
+
+    shadow-lg shadow-black/5 dark:shadow-black/20
+
+    p-3 sm:p-5
+  "
+>
+
+  {/* Header */}
+  <div className="mb-5">
+
+    <h2
+      className="
+        text-lg sm:text-xl
+        font-semibold
+
+        text-gray-800 dark:text-white
+      "
+    >
+      Expense Categories
+    </h2>
+
+    <p
+      className="
+        text-sm
+
+        text-gray-500 dark:text-gray-400
+      "
+    >
+      Visualize how your expenses are distributed
+    </p>
+
+  </div>
+
+  {/* Chart Area */}
+  <div className="w-full h-[85%]">
+
+    {info.length === 0 ? (
+
+      /* Empty State */
+      <div
+        className="
+          w-full h-full
+
+          flex flex-col
+          items-center justify-center
+
+          rounded-2xl
+
+          border-2 border-dashed
+          border-gray-200 dark:border-gray-800
+
+          bg-linear-to-br
+          from-gray-50
+          to-purple-50
+
+          dark:from-gray-900
+          dark:to-gray-950
+
+          relative overflow-hidden
+        "
+      >
+
+        {/* Glow */}
+        <div
+          className="
+            absolute
+
+            w-52 h-52
+
+            bg-purple-400/10
+            dark:bg-purple-500/10
+
+            rounded-full
+
+            blur-3xl
+          "
+        />
+
+        {/* Fake Pie Preview */}
+        <div
+          className="
+            absolute bottom-10
+
+            w-36 h-36
+
+            rounded-full
+
+            border-18
+            border-purple-300/20
+
+            border-t-purple-400/40
+            border-r-pink-400/30
+            border-b-blue-400/20
+
+            rotate-12
+
+            opacity-40
+          "
+        />
+
+        {/* Content */}
+        <div className="relative z-10 text-center px-6">
+
+          {/* Icon */}
+          <div
+            className="
+              w-20 h-20 mx-auto mb-5
+
+              flex items-center justify-center
+
+              rounded-full
+
+              bg-purple-100 dark:bg-purple-900/20
+
+              text-4xl
+            "
+          >
+            🥧
+          </div>
+
+          {/* Heading */}
+          <h3
+            className="
+              text-lg sm:text-xl
+              font-semibold
+
+              text-gray-800 dark:text-white
+            "
+          >
+            No expense categories yet
+          </h3>
+
+          {/* Description */}
+          <p
+            className="
+              mt-2
+
+              text-sm sm:text-base
+
+              text-gray-500 dark:text-gray-400
+
+              max-w-md
+            "
+          >
+            Add expense transactions to see
+            category-wise spending insights and analysis.
+          </p>
+
+          {/* CTA */}
+          <button
+            onClick={()=>{
+              Open()
+              navigate("/transaction")
+            }}
+            className="
+              mt-6
+
+              px-5 py-3
+
+              rounded-2xl
+
+              bg-linear-to-r
+              from-purple-500
+              to-pink-500
+
+              text-white font-medium
+
+              shadow-lg shadow-purple-500/20
+
+              hover:scale-[1.03]
+
+              active:scale-[0.97]
+
+              transition-all duration-300
+            "
+          >
+            + Add Expense
+          </button>
+
+        </div>
+
+      </div>
+
+    ) : (
+
+      /* Actual Chart */
+      <ResponsiveContainer width="100%" height="100%">
+
         <PieChart margin={{ right: 0 }}>
+
           <Pie
             data={info}
             cx={"50%"}
             cy={"50%"}
-            innerRadius={50}
-            outerRadius={100}
+            innerRadius={"45%"}
+            outerRadius={"75%"}
             paddingAngle={1}
             dataKey={"value"}
           >
-            {info.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}>
 
-              </Cell>
+            {info.map((_, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
+
           </Pie>
-          <Tooltip content={<CustomTooltip />}></Tooltip>
-          <Legend content={rendercustomlegend} layout="vertical" align="right" verticalAlign="middle" iconType="circle" wrapperStyle={{ paddingLeft: "0px" }} />
+
+          <Tooltip content={<CustomTooltip />} />
+
+          <Legend
+            content={rendercustomlegend}
+            verticalAlign="bottom"
+          />
+
         </PieChart>
+
       </ResponsiveContainer>
+
+    )}
+
+  </div>
+
+</div>
   )
 }
 

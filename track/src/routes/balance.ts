@@ -13,12 +13,18 @@ export const balance = new Hono<{
     }
 }>()
 
+interface balancetype{
+    amount:number,
+    type:"income" | "expense",
+    createAt:Date
+}
+
 
 balance.use('/*', async (c, next) => {
     const auth = c.req.header("Authorization") || ""
     const token = auth.split(" ")[1]
     const response = await verify(token, c.env.JWT_SECRET, "HS256");
-
+        console.log("user info :",response)
     if (response.id) {
         c.set("userId", response.id as any);
         await next()
@@ -65,18 +71,13 @@ balance.get('/balances', async (c) => {
     }
 })
 
-interface balancetype{
-    amount:number,
-    type:"income" | "expense",
-    createAt:Date
-}
 
 //get balance history
 balance.get('/balance-history',async (c)=>{
     const prisma=createPrisma(c.env.DATABASE_URL);
     const userid=c.get("userId");
          let balancec=0;
-
+console.log("id :",userid)
     try{
         const alltransfer:balancetype[]=await prisma.transaction.findMany({
             where:{
@@ -88,7 +89,7 @@ balance.get('/balance-history',async (c)=>{
                 createAt:true
             }
         })
-
+console.log(alltransfer)
         if(!alltransfer) return c.text('something went wrong while fetching')
 
          alltransfer.sort((a,b)=>
