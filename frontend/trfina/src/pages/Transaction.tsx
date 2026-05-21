@@ -35,7 +35,7 @@ export const Transaction = () => {
      if(loading){
           return <div>
               <div>
-                  <Navbar/>
+                  <Navbar search={search} setsearch={setsearch} />
               </div>
               {/* <div className="flex justify-center items-center pt-60 ">
               <div className="w-2/3  h-50 sm:h-70  shadow-sm flex flex-col justify-center gap-2 items-center shadow-blue-200 ">

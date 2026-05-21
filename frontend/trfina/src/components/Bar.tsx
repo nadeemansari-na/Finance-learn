@@ -1,28 +1,22 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { useexpense } from "../hook/Expense"
-import { useState } from "react"
 import { useOpen } from "../context/createcontext";
 
 
 
-interface info{
-    name:string;
-    amount:number;
-}
 
 export const BarChartComponent=()=>{
     const {data}=useexpense()
     const navigate=useNavigate()
     const {Open}=useOpen()
-    const [info,setinfo]=useState<info []>([])
-    const [tinco,settinco]=useState<number>()
+  
         console.log("final : "+{data})
 
         const sortedTransactions=[...data].sort((a,b)=> new Date(b.createAt).getTime() - new Date(a.createAt).getTime())
         const recentTransactions= sortedTransactions.slice(0,5);
  
-    console.log(info)
+  
 
 
     return (

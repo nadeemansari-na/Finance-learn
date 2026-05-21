@@ -1,6 +1,7 @@
 import axios from "axios"
 import type { expensecheck } from "../hook/Expense"
 import { useEffect } from "react"
+import { Backend } from "../pages/Backend"
 
 type Removeprops = {
     id: string
@@ -15,9 +16,11 @@ export const Removebtm = ({ id,setdata }: Removeprops) => {
     useEffect(()=>{
         const eleminate=async ()=>{
                 try{
-                    const res=await axios.delete(`http://127.0.0.1:8787/api/v1/transaction/transactions/${id}`,{
+                    const token=localStorage.getItem("token")
+
+                    const res=await axios.delete(`${Backend}/api/v1/transaction/transactions/${id}`,{
                         headers:{
-                            Authorization:`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtbm9wdHhuNTAwMDBkc3hzczF6ZmZ5OHoifQ.k5zXrqFFvnOhFnhgQTqgpjxjqLxIYEFUQfSYrKNqATY`
+                            Authorization:`Bearer ${token}`
                         },
                     })
     
@@ -33,5 +36,5 @@ export const Removebtm = ({ id,setdata }: Removeprops) => {
             eleminate()
 
     },[])
-    return
+    return null;
 }

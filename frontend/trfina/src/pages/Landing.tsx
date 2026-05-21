@@ -7,7 +7,6 @@ import { BarChartComponent } from "../components/Bar";
 import { useBalanceInEx } from "../hook/Balance";
 import { useSidebar } from "../context/sidebarContext";
 import { Transactionskeleton } from "../components/Transactionskeleton";
-import { useToggle } from "../context/toggle";
 import { useexpense } from "../hook/Expense";
 
 
@@ -16,7 +15,6 @@ export const Landing=()=>{
     const {ddata,loading}=useBalanceInEx()
     const {data}=useexpense()
     const {close}=useSidebar()
-    const toggle=useToggle()
     if(loading){
         return <div>
             <div>

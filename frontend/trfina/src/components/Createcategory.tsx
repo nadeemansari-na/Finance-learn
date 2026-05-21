@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCategoryList } from "../hook/Categorylist";
 import {useCategory } from "../context/categoryId";
+import { Backend } from "../pages/Backend";
 
 
 export const CreateCategory = ({ typee}) => {
   const {categorylist,setCategoryList}=useCategoryList()
-  const [expensecategory, setExpenseCategory] = useState(["Food", "Travel", "Shopping"]);
-  const [incomecategory, setIncomeCategory] = useState(["Salary", "Investment", "Refund"]);
+  // const [expensecategory, setExpenseCategory] = useState(["Food", "Travel", "Shopping"]);
+  // const [incomecategory, setIncomeCategory] = useState(["Salary", "Investment", "Refund"]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const {categoryId,setCategoryId}=useCategory()
@@ -32,16 +33,18 @@ export const CreateCategory = ({ typee}) => {
     //api call
     try {
 
-      if (typee == "income") {
-        setIncomeCategory((prev) => [...prev, newCategory])
-      }
-      else {
-        setExpenseCategory((prev) => [...prev, newCategory])
-      }
+      // if (typee == "income") {
+      //   setIncomeCategory((prev) => [...prev, newCategory])
+      // }
+      // else {
+      //   setExpenseCategory((prev) => [...prev, newCategory])
+      // }
       setShowCategoryModal(false)
-      const res=await axios.post(`http://127.0.0.1:8787/api/v1/category/categories`, { name: newCategory, type:typee }, {
+
+      const token=localStorage.getItem("token")
+      const res=await axios.post(`${Backend}/api/v1/category/categories`, { name: newCategory, type:typee }, {
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtbm9wdHhuNTAwMDBkc3hzczF6ZmZ5OHoifQ.k5zXrqFFvnOhFnhgQTqgpjxjqLxIYEFUQfSYrKNqATY`
+          Authorization: `Bearer ${token}`
         },
       })
       console.log("new category id :",typeof(res.data.id))

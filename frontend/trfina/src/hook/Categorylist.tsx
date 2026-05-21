@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Backend } from "../pages/Backend"
 
 interface categorylisttype{
     name:string,
@@ -15,7 +16,7 @@ export const useCategoryList=()=>{
                 const token=localStorage.getItem("token")
                 if(!token) return 
                 try{
-                     const res=await axios.get(`http://127.0.0.1:8787/api/v1/category/categories`,{
+                     const res=await axios.get(`${Backend}/api/v1/category/categories`,{
                 headers:{
                     Authorization:`Bearer ${token}`
                 },
