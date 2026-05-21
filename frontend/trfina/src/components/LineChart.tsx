@@ -39,7 +39,6 @@ export const LineChartcomponent = () => {
   groupedData.sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
-    console.log("grouped data :",groupedData)
 
   return (
     <div className="w-full h-65 sm:h-80">
@@ -60,7 +59,7 @@ export const LineChartcomponent = () => {
         border-2 border-dashed
         border-gray-200 dark:border-gray-800
 
-        bg-gradient-to-br
+        bg-linear-to-br
         from-gray-50
         to-blue-50
 

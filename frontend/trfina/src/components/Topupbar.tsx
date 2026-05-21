@@ -3,6 +3,7 @@ import { CreateCategory } from "./Createcategory";
 import { useOpen } from "../context/createcontext";
 import { useCategory } from "../context/categoryId";
 import axios from "axios";
+import { Backend } from "../pages/Backend";
 
 export interface topbarProps {
     issopen: boolean;
@@ -35,14 +36,13 @@ export const Topupbar = () => {
         date:getCurrentDateTime()
     })
   
-    console.log("category id :",categoryId,createtr.amount,typee)
 
     const handler=async ()=>{
 
         const token=localStorage.getItem("token")
         try{
-
-            const result=await axios.post(" http://127.0.0.1:8787/api/v1/transaction/transactions",{
+        
+            await axios.post(`${Backend}/api/v1/transaction/transactions`,{
                
                     type:typee,
                     amount:createtr.amount,
@@ -56,7 +56,6 @@ export const Topupbar = () => {
             }
         })
         close()
-        console.log(result.data)
         window.location.reload()
         }catch(e){
             console.log(e)

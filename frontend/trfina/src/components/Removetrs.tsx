@@ -9,8 +9,6 @@ type Removeprops = {
 }
 
 export const Removebtm = ({ id,setdata }: Removeprops) => {
-    console.log("not even reaching")
-    console.log(id)
 
   
     useEffect(()=>{
@@ -18,17 +16,15 @@ export const Removebtm = ({ id,setdata }: Removeprops) => {
                 try{
                     const token=localStorage.getItem("token")
 
-                    const res=await axios.delete(`${Backend}/api/v1/transaction/transactions/${id}`,{
+                    await axios.delete(`${Backend}/api/v1/transaction/transactions/${id}`,{
                         headers:{
                             Authorization:`Bearer ${token}`
                         },
                     })
     
-                    console.log(res)
     
                     setdata(prev=> prev.filter(item=> item.id !==id))
                 }catch(e){
-                    console.log(e)
                 }
     
             }

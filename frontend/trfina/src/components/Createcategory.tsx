@@ -7,17 +7,10 @@ import { Backend } from "../pages/Backend";
 
 export const CreateCategory = ({ typee}) => {
   const {categorylist,setCategoryList}=useCategoryList()
-  // const [expensecategory, setExpenseCategory] = useState(["Food", "Travel", "Shopping"]);
-  // const [incomecategory, setIncomeCategory] = useState(["Salary", "Investment", "Refund"]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const {categoryId,setCategoryId}=useCategory()
-  console.log("selected category id :",categoryId)
-  // const selectedname=categorylist.find(c=>
-  //     c.id==selectedCategory
-  //   )
 
-  console.log("catid :",categoryId)
   useEffect(()=>{
       if(categorylist.length>0){
        
@@ -27,18 +20,12 @@ export const CreateCategory = ({ typee}) => {
 
   const handleAddCategory = async () => {
     if (!newCategory.trim()) return
-    // if (incomecategory.includes(newCategory)) alert('already exist')
-    // if (expensecategory.includes(newCategory)) alert('already exist')
+
 
     //api call
     try {
 
-      // if (typee == "income") {
-      //   setIncomeCategory((prev) => [...prev, newCategory])
-      // }
-      // else {
-      //   setExpenseCategory((prev) => [...prev, newCategory])
-      // }
+    
       setShowCategoryModal(false)
 
       const token=localStorage.getItem("token")
@@ -47,7 +34,6 @@ export const CreateCategory = ({ typee}) => {
           Authorization: `Bearer ${token}`
         },
       })
-      console.log("new category id :",typeof(res.data.id))
       setCategoryList(prev => [...prev , res.data] )
       setCategoryId(String(res.data.id))
       setNewCategory("")
@@ -92,7 +78,6 @@ export const CreateCategory = ({ typee}) => {
       "
       value={categoryId}
       onChange={(e) => {
-        console.log("target :",e.target.value)
         setCategoryId(e.target.value);
         if (e.target.value === "add_New") {
         

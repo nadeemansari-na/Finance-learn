@@ -107,7 +107,7 @@ export const BarChartComponent=()=>{
           border-2 border-dashed
           border-gray-200 dark:border-gray-800
 
-          bg-gradient-to-br
+          bg-linear-to-br
           from-gray-50
           to-cyan-50
 
@@ -212,7 +212,7 @@ export const BarChartComponent=()=>{
 
               rounded-2xl
 
-              bg-gradient-to-r
+              bg-linear-to-r
               from-cyan-500
               to-blue-500
 
