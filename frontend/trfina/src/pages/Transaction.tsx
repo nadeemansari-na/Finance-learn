@@ -33,7 +33,7 @@ export const Transaction = () => {
     item.category.name.toLowerCase().includes(search.toLowerCase())
   )
      if(loading){
-          return <div className="dark:bg-gray-900">
+          return <div className="dark:bg-gray-900 w-full  min-h-screen">
               <div>
                   <Navbar search={search} setsearch={setsearch} />
               </div>
