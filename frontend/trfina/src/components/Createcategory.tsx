@@ -4,8 +4,11 @@ import { useCategoryList } from "../hook/Categorylist";
 import {useCategory } from "../context/categoryId";
 import { Backend } from "../pages/Backend";
 
+type Props={
+  typee:"income" | "expense" | ""
+}
 
-export const CreateCategory = ({ typee}) => {
+export const CreateCategory = ({ typee}:Props) => {
   const {categorylist,setCategoryList}=useCategoryList()
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");

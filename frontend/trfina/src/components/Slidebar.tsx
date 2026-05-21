@@ -84,7 +84,7 @@ export const Slide=()=>{
       </div>
 
       {/* Close */}
-      <Close isopen={isOpen} setisopen={close} />
+      <Close  />
 
     </div>
 

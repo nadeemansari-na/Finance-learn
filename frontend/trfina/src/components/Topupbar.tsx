@@ -15,7 +15,7 @@ export interface createtransactiontype {
 }
 
 export const Topupbar = () => {
-    const [typee, settypee] = useState<string>("expense")
+    const [typee, settypee] = useState<"expense" | "income" | "">("")
     const {close,issopen}=useOpen()
     const {categoryId}=useCategory()
     const getCurrentDateTime = () => {

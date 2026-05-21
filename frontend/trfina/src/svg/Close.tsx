@@ -1,9 +1,11 @@
+import { useSidebar } from "../context/sidebarContext";
 
 
-export const Close=({isopen,setisopen})=>{
 
+export const Close=()=>{
+  const {close}=useSidebar()
     const submit=()=>{
-      setisopen(isopen)
+      close()
 
     }
 
