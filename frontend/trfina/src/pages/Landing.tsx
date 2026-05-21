@@ -16,7 +16,7 @@ export const Landing=()=>{
     const {data}=useexpense()
     const {close}=useSidebar()
     if(loading){
-        return <div>
+        return <div className="dark:bg-gray-900">
             <div>
                 <Appbar/>
             </div>

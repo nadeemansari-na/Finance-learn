@@ -33,21 +33,11 @@ export const Transaction = () => {
     item.category.name.toLowerCase().includes(search.toLowerCase())
   )
      if(loading){
-          return <div>
+          return <div className="dark:bg-gray-900">
               <div>
                   <Navbar search={search} setsearch={setsearch} />
               </div>
-              {/* <div className="flex justify-center items-center pt-60 ">
-              <div className="w-2/3  h-50 sm:h-70  shadow-sm flex flex-col justify-center gap-2 items-center shadow-blue-200 ">
-                <div className="w-15 h-15 rounded-full bg-gray-100 flex justify-center items-center">
-                <EmptySet className=" text-blue-500 h-10 w-10"/>
-                </div>
-                <div className="text-gray-600">
-                  No recent transactions
-                </div>
-              </div>
-
-              </div> */}
+           
               <Transactionskeleton/>
           </div>
       }
