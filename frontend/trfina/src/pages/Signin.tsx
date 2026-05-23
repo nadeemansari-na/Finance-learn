@@ -40,7 +40,7 @@ export const Signin = () => {
 
     flex flex-col lg:flex-row
 
-    bg-gradient-to-br
+    bg-linear-to-br
     from-gray-50
     via-blue-50
     to-cyan-50

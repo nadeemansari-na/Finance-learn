@@ -10,6 +10,7 @@ export const Slide=()=>{
     const navigate=useNavigate()
     const {isOpen,close}=useSidebar()
     const {Open}=useOpen()
+    const name=localStorage.getItem("name")
     const change=()=>{
         navigate("/transaction")
     }
@@ -102,7 +103,7 @@ export const Slide=()=>{
     >
 
       <div className="mb-3">
-        <Avatar name="nadeem" />
+        <Avatar name={name || ""} />
       </div>
 
       <h2
@@ -111,7 +112,9 @@ export const Slide=()=>{
           text-gray-800 dark:text-white
         "
       >
-        Nadeem Ansari
+        {name?.split(" ")
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ")}
       </h2>
 
       <p

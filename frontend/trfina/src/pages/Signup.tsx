@@ -12,7 +12,7 @@ import { Backend } from "./Backend"
 
 export const Signup = () => {
     const navigate = useNavigate();
-
+    const [name,setName]=useState<string | "">("");
     const [postinputs, setpostinputs] = useState<Check>({
         email: "",
         password: ""
@@ -32,6 +32,7 @@ export const Signup = () => {
             if (result.data.msg == "user created successfully") {
                 localStorage.setItem("token", result.data.token)
                 localStorage.setItem("user", result.data.email)
+                localStorage.setItem("name",name)
                 navigate('/landing')
             }
             else alert("your credential are wrong")
@@ -58,7 +59,7 @@ export const Signup = () => {
     dark:to-gray-950
   "
 >
-
+    
   {/* Left Section */}
   <div
     className="
@@ -110,6 +111,9 @@ export const Signup = () => {
         <Inputbox
           placeholder={"Nadeem"}
           label={"Name"}
+          onchange={(e)=>{
+            setName(e.target.value)
+          }}
         />
 
         {/* Email */}

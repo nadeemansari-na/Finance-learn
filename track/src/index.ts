@@ -6,6 +6,7 @@ import { balance } from './routes/balance'
 import { category } from './routes/category'
 import { cors } from 'hono/cors'
 
+
 interface Env {
   DATABASE_URL: string
   JWT_SECRET:string
@@ -15,7 +16,7 @@ const app = new Hono<{   Bindings: {
   JWT_SECRET: string
   } }>()
 
-  app.use(cors())
+  app.use('*',cors())
 app.route('/api/v1/userrouter',userrouter)
 app.route('/api/v1/transaction',transaction)
 app.route('/api/v1/balance',balance)

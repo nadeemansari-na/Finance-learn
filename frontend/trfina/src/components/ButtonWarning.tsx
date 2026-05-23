@@ -7,10 +7,10 @@ interface btnwarn{
 }
 export function ButtonWarning({label,buttontext , to}:btnwarn){
     return <div className="ml-8">
-        <div>
+        <div className="dark:text-gray-400">
             {label}
             
-        <Link className="text-blue-700 cursor-pointer " to={to}> {buttontext}</Link>
+        <Link className="text-blue-200 cursor-pointer " to={to}> {buttontext}</Link>
         </div>
     </div>
 }
